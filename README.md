@@ -18,3 +18,5 @@ get that code, this project will create a C++
 class which calls their library and conforms to std
 and Boost standards. It makes no
 modifications to the library.
+
+Barash, L. Yu, and L. N. Shchur. "PRAND: GPU accelerated parallel random number generation library: Using most reliable algorithms and applying parallelism of modern GPUs and CPUs." Computer Physics Communications (2014).
