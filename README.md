@@ -1,22 +1,19 @@
 mcrand
 ======
 
-Random number generation for Monte Carlo in C++
+Random number generation for Monte Carlo in C++.
+This library uses recent work by Barash, Yu, and Shchur to ensure
+that streams with different seeds are independent, which is crucial for Monte
+Carlo techniques. To use this library, you have to download their
+library, which is behind an Elsevier paywall. Pick one of these two.
 
-This project defines a C++ concept for parallel random
-number generation so that a set of threads can each take
-an independent random number generator. It works for generators
-from std and from Boost.
+* [RNGSSELIB](http://cpc.cs.qub.ac.uk/summaries/AEIT_v2_0.html) - 
+  Barash, L. Yu, and L. N. Shchur. "RNGSSELIB: Program library for random number generation, SSE2 realization." Computer Physics Communications 182.7 (2011): 1518-1527.
 
-There is a paper on random number generation 
-by Barash and Shchur, http://arxiv.org/abs/1307.5869,
-where they describe a modern random number generator capable
-of parallel generation and, importantly, independent seeding
-of distributions. The code is behind a paywall
-at http://cpc.cs.qub.ac.uk/summaries/AESB_v1_0.html, but if you
-get that code, this project will create a C++
-class which calls their library and conforms to std
-and Boost standards. It makes no
-modifications to the library.
+* [PRAND](http://cpc.cs.qub.ac.uk/summaries/AESB_v1_0.html) - Requires
+  the NVIDIA compiler to compile this.
+  Barash, L. Yu, and L. N. Shchur. "PRAND: GPU accelerated parallel random number generation library: Using most reliable algorithms and applying parallelism of modern GPUs and CPUs." Computer Physics Communications (2014).
 
-Barash, L. Yu, and L. N. Shchur. "PRAND: GPU accelerated parallel random number generation library: Using most reliable algorithms and applying parallelism of modern GPUs and CPUs." Computer Physics Communications (2014).
+This library makes C++ classes which conform to the random number generator
+concept.
+

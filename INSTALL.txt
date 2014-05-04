@@ -1,17 +1,23 @@
-PRANDTAR=~/Dropbox/aesb_v1_0.tar.gz
+# For PRAND
+RANDTAR=~/Dropbox/aesb_v1_0.tar.gz
 mkdir prand
 cd prand
-tar zxf $PRANDTAR
-
-cd include
-for i in *.h
-do
-  cat $i | perl -pe "s/__host__//g;" -pe "s/__device__//g;" > ../../include/${i}
-done
+tar zxf $RANDTAR
+cd source
+# Add to $CFLAGS -Xcompiler -fpic
+make
 
 sudo apt-get install -y nvidia-cuda-toolkit
 
-CC=nvcc
-CFLAGS=-arch=sm_20 -maxrregcount 32 -O2
-#g++ -O2 main.cpp ../../lib/libprand.a -I../../include -L/usr/local/cuda-5.5/lib64 -lcudart
-nvcc -arch=sm_20 -dlink $(OUT) -o ../lib/libdprand.o
+
+
+# For RNGSSELIB
+RANDTAR=~/Dropbox/aesb_v1_0.tar.gz
+mkdir rngsselib
+cd rngsselib
+tar zxf $RANDTAR
+cd source
+# Add to $CFLAGS -fpic
+make
+
+
