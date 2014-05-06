@@ -23,8 +23,8 @@
 //   Please cite the author in any work or product based on this material.
 //
 //   =========================================================================
-#ifndef _GSPN_RANDOM_H_
-#define _GSPN_RANDOM_H_ 1
+#ifndef _RANDOM_H_
+#define _RANDOM_H_ 1
 
 #include <random>
 #include <mutex>
@@ -40,7 +40,7 @@
 
 namespace afidd
 {
-namespace mc
+namespace rng
 {
 
 /*! Random number generator gets a list of numbers from another generator.
@@ -69,14 +69,10 @@ class SlurpGenerator
   constexpr result_type min() { return _provider.min(); }
   constexpr result_type max() { return _provider.max(); }
 
-
-
   void release()
   {
     _provider.release(_idx);
   }
-
-
 
   result_type operator()()
   {
@@ -137,7 +133,6 @@ public:
     return _subgen.at(0)();
   }
 
-
   value_type& child()
   {
     std::lock_guard<std::mutex> guard{_one_reader};
@@ -161,13 +156,11 @@ public:
     }
   }
 
-
   void release(size_t which_subgen)
   {
     std::lock_guard<std::mutex> guard{_one_reader};
     _available.insert(which_subgen);
   }
-
 
   void write(std::vector<result_type>& cache)
   {
@@ -179,28 +172,8 @@ public:
   }
 };
 
-
-
-template<typename RNG>
-double uniform(RNG& rng)
-{
-  std::uniform_real_distribution<double> dist(0.0, 1.0);
-  return dist(rng);
-}
-
-
-
-template<typename RNG>
-size_t uniform_index(RNG& rng, size_t cnt)
-{
-  std::uniform_int_distribution<size_t> gen_idx(0, cnt-1);
-  return gen_idx(rng);
-}
-
-
-
-} // end namespace smv
+} // end namespace rng
 } // end namespace afidd
 
 
-#endif // _GSPN_RANDOM_H_
+#endif // _RANDOM_H_

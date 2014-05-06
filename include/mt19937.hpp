@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <random>
+#include <istream>
+#include <ostream>
 
 namespace afidd
 {
@@ -15,6 +17,7 @@ class mt19937 {
 
   mt19937();
   ~mt19937();
+  //! There are 10^19 distinct seeds each with 10^130 independent samples.
   explicit mt19937(uint64_t seed);
   explicit mt19937(const mt19937& engine);
   explicit mt19937(mt19937&& engine);
@@ -31,11 +34,16 @@ class mt19937 {
   void generate(uint32_t* first, uint32_t* last);
   void discard(uint64_t z);
   void discard(uint64_t factor, uint32_t power_of_two);
+  friend std::ostream& operator<<(std::ostream&, const mt19937&);
+  friend std::istream& operator>>(std::istream&, mt19937&);
  private:
   class impl;
   std::unique_ptr<impl> pimpl_;
 };
 
+
+std::ostream& operator<<(std::ostream&, const mt19937&);
+std::istream& operator>>(std::istream&, mt19937&);
 }
 }
 
