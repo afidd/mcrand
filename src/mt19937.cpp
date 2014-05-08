@@ -70,9 +70,12 @@ class mt19937::impl {
   }
 
   impl(std::seed_seq& seq) : sse_synchronized_{true} {
-    StateOuputIter os{state_};
-    seq.param(os);
-    mt19937_get_sse_state_(&state_, &sse_state_);
+    std::array<uint32_t,4> val;
+    seq.generate(val.begin(), val.end());
+    uint64_t seed{val[1]};
+    seed<<=32;
+    seed+=val[0];
+    this->seed(seed);
   }
 
   impl& operator=(const impl &o) {
@@ -109,6 +112,7 @@ class mt19937::impl {
   void seed(uint64_t seq) {
     assert(sse_synchronized_);
     mt19937_init_sequence_(&state_, seq);
+    mt19937_get_sse_state_(&state_, &sse_state_);
   }
 
   void generate(uint32_t* first, uint32_t length) {
